@@ -21,6 +21,44 @@ namespace FooYes.Data.Services
         {
             _dbContext = context;
 
+            if (!context.Restaurants.Any())
+            {
+                AddAllRestaurants();
+            }
+        }
+
+        public IEnumerable<RestaurantModel> GetAllRestaurants()
+        {
+            return _dbContext.Restaurants.OrderBy(d => d.Rating).ToList();
+        }
+
+        public RestaurantModel GetRestaurantById(int id)
+        {
+            return _dbContext.Restaurants.OrderBy(r => r.Id).ToList()[id];
+        }
+
+        public DishModel GetDishById(int id)
+        {
+            foreach (var restaurant in _dbContext.Restaurants)
+            {
+                var item = restaurant.Dishes.FirstOrDefault(i => i.Id == id);
+
+                if (item != null)
+                {
+                    return item;
+                }
+            }
+
+            return null;
+        }
+
+        public List<DishModel> GetDishByRestaurantId(int id)
+        {
+            return _dbContext.Dishes.OrderBy(d => d.Name).ToList();
+        }
+
+        public void AddAllRestaurants()
+        {
             dishesForRestaurant1 = new List<DishModel>();
             dishesForRestaurant2 = new List<DishModel>();
             dishesForRestaurant3 = new List<DishModel>();
@@ -128,77 +166,6 @@ namespace FooYes.Data.Services
                     6.5f,
                     dishesForRestaurant4));
             _dbContext.SaveChanges();
-        }
-
-        public IEnumerable<RestaurantModel> GetAllRestaurants()
-        {
-            return _dbContext.Restaurants.OrderBy(d => d.Rating).ToList();
-        }
-
-        public RestaurantModel GetRestaurantById(int id)
-        {
-            return _dbContext.Restaurants.OrderBy(r => r.Id).ToList()[id];
-        }
-
-        public DishModel GetDishById(int id)
-        {
-            foreach (var restaurant in _dbContext.Restaurants)
-            {
-                var item = restaurant.Dishes.FirstOrDefault(i => i.Id == id);
-
-                if (item != null)
-                {
-                    return item;
-                }
-            }
-
-            return null;
-        }
-
-        public List<DishModel> GetDishByRestaurantId(int id)
-        {
-            return _dbContext.Dishes.OrderBy(d => d.Name).ToList();
-        }
-
-        public void AddAllRestaurants()
-        {
-            _dbContext.Restaurants.Add(new RestaurantModel(
-                0,
-                RestaurantModel.RestaurantType.Italian,
-                "italian.jpg",
-                "Le Cinecitta",
-                "7 Rue Jay, 38000 Grenoble",
-                3.0f,
-                dishesForRestaurant1));
-
-            _dbContext.Restaurants.Add(
-                new RestaurantModel(
-                    1,
-                    RestaurantModel.RestaurantType.Chinese,
-                    "chinese.jpg",
-                    "Au Dragon d'Or", "14 Rue Clôt Bey, 38000 Grenoble",
-                    4.0f,
-                    dishesForRestaurant2));
-
-            _dbContext.Restaurants.Add(
-                new RestaurantModel(
-                    2,
-                    RestaurantModel.RestaurantType.Mexican,
-                    "mexican.jpg",
-                    "Viva Mexico",
-                    "7 Rue Jean Prévost, 38000 Grenoble",
-                    9.0f,
-                    dishesForRestaurant3));
-
-            _dbContext.Restaurants.Add(
-                new RestaurantModel(
-                    3,
-                    RestaurantModel.RestaurantType.Vegetarian,
-                    "vegetarian.jpg",
-                    "Katmandou",
-                    "4 Rue Condorcet, 38000 Grenoble",
-                    6.5f,
-                    dishesForRestaurant4));
         }
     }
 }
