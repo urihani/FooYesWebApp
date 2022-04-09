@@ -1,0 +1,65 @@
+﻿@using System.Web.UI.WebControls
+@using FooYes.Data.Models
+@model FooYes.Data.Models.DishModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<h2 class="mt-4">@ViewBag.RestaurantName</h2>
+
+@using (Html.BeginForm("DishesByCategory", "Dishes", FormMethod.Post, new { enctype = "multipart/form-data", name = "categories-form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row mb-2">
+        <div class="col-md-10">
+            <input type="hidden" name="id" value="@ViewBag.RestaurantId"/>
+            
+            @Html.DropDownList("category", 
+                EnumHelper.GetSelectList(typeof(DishModel.MenuType)) , 
+                new { @class = "form-control", @id="categories-list" })
+        </div>
+    </div>
+}
+
+<script>
+$(document).ready(function() {
+  $('#categories-list').on('change', function() {
+     document.forms["categories-form"].submit();
+  });
+});
+</script>
+
+@*CARDS SECTION*@
+<div class="row row-cols-1 row-cols-md-2 g-4">
+    @foreach (var dish in ViewBag.Dishes)
+    {
+        <div class="col">
+            <div class="card mb-3" style="max-width: 540px;">
+                <a class="card-flyer" href="@Url.Action("Index", "Dish", new { id = dish.Id })">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <div class="ratio ratio-1x1">
+                                <img src="~/Images/DishesImages/@dish.ImgPath" class="img-fluid rounded-start image-box card-img-top" alt=""/>
+                            </div>
+
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">@dish.Name</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">@dish._MenuType</h6>
+                                <p class="card-subtitle mb-2 text-muted">@dish.Price €</p>
+                                @using (Html.BeginForm("Create", "Cart", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="dishId" value="@dish.Id"/>
+                                    <input type="hidden" name="quantity" value="1"/>
+                                    <button class="btn btn-primary mt-3" type="submit" value="Create" id="button-addon">Add to cart</button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    }
+</div>

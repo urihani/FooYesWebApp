@@ -1,0 +1,29 @@
+﻿@using FooYes.Data.Models
+@{
+    DishModel dish = @ViewBag.Dish;
+}
+
+<div class="container-md body-content">
+    <div class="row mt-5">
+        <div class="col">
+            <div class="w-75">
+                <img src="~/Images/DishesImages/@dish.ImgPath" class="img-fluid w-75 d-block m-auto" alt=""/>
+            </div>
+        </div>
+        <div class="col">
+            <h2 class="mt-4">@dish.Name</h2>
+            <p class="mb-2 text-muted">@dish._MenuType</p>
+            <p>@dish.Description</p>
+            <h5 class="mt-4">@dish.Price €</h5>
+            <div class="input-group mb-4 mt-4">
+                @using (Html.BeginForm("Create", "Cart", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="dishId" value="@dish.Id"/> 
+                    <input type="number" name="quantity" value="" class="form-control" placeholder="Quantity" aria-label="Quantity" aria-describedby="button-addon">
+                    <button class="btn btn-outline-primary mt-3" type="submit" value="Create" id="button-addon">Add to cart</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>

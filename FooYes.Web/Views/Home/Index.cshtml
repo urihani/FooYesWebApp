@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Home Page";    
+}
+
+@model IEnumerable<FooYes.Data.Models.RestaurantModel>
+
+<h2 class="mt-4">Top rated restaurants</h2>
+
+@*CARDS SECTION*@
+<div class="row row-cols-1 row-cols-md-2 g-4">
+    @foreach (var restaurant in Model)
+            {
+        <div class="col">
+            <div class="card mb-3" style="max-width: 540px;">
+                <a class="card-flyer" href="@Url.Action("Index", "Dishes", new { id = restaurant.Id})">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <div class="ratio ratio-1x1">
+                                <img src="~/Images/RestaurantImages/@restaurant.ImgPath" class="img-fluid rounded-start image-box card-img-top" alt="" />
+                            </div>
+                   
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">@restaurant.Name</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">@restaurant.Type</h6>
+                                <p class="card-subtitle mb-2 text-muted">@restaurant.Address</p>
+                                <div class="row">
+                                    <div class="col-md-auto pe-0">
+                                      <img src="~/Images/Icons/star.svg" class="img-fluid" width="20em" height="1rem" alt="" />
+                                    </div>
+                                    <div class="col ps-2">
+                                        <p class="card-text"><small class="text-muted">@restaurant.Rating</small></p>
+                                    </div>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    }
+</div>

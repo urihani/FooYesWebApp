@@ -1,0 +1,65 @@
+﻿@using FooYes.Data.Models
+@{
+    CartModel cart = @ViewBag.Cart;
+}
+
+<div class="container-md body-content">
+    <div class="row mt-5">
+        <div class="col-md-auto d-flex justify-content-center">
+            <div class="w-75">
+                <h1>My Cart</h1>
+
+                @if (cart.OrderLines.Count == 0)
+                {
+                    <h2 class="mt-5">Cart is empty</h2>
+                }
+                else
+                {
+                    <div class="row row-cols-1 row-cols-md-1 g-1">
+                        @foreach (var item in cart.OrderLines)
+                        {
+                            <div class="col">
+                                <div class="card mb-3" style="width: 30rem;">
+                                    <div class="row g-0">
+                                        <div class="col-md-4">
+                                            <div class="ratio ratio-1x1">
+                                                <img src="~/Images/DishesImages/@item.Key.ImgPath" class="img-fluid rounded-start image-box card-img-top" alt=""/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                                <h5 class="card-title">@item.Key.Name</h5>
+                                                <h6 class="card-subtitle mb-2 text-muted">@item.Key._MenuType</h6>
+                                                <p class="card-subtitle mb-2 text-muted">@item.Key.Price€</p>
+                                                <div class="row">
+                                                    @using (Html.BeginForm("Update", "Cart", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                                    {
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="hidden" name="dishId" value="@item.Key.Id"/>
+                                                        <p class="card-subtitle mb-2 text-muted">Quantity : </p>
+                                                        <input type="number" name="quantity" value="@item.Value" class="form-control" placeholder="Quantity" aria-label="Quantity" aria-describedby="button-addon">
+                                                        <button class="btn btn-secondary mt-2" type="submit" value="Create" id="button-addon">Update</button>
+                                                    }
+                                                    @using (Html.BeginForm("Delete", "Cart", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                                    {
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="hidden" name="dishId" value="@item.Key.Id"/>
+                                                        <button class="btn btn-primary mt-2" type="submit" value="Delete" id="button-addon">Delete</button>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+
+            </div>
+        </div>
+        <div class="col-md-auto">
+            <h2>TOTAL : @cart.Total.ToString("c2")</h2>
+        </div>
+    </div>
+</div>
