@@ -24,30 +24,21 @@ FooYesWebApp
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
+    <li><a href="#functionalities">Functionalities</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
-
-
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
 Final project for second year at IUT2 Grenoble.  `IUT2`, `Grenoble`, `C#`, `.net 4.5.2`, 
-`Entity Framework 6`, `Identity 2.2.1`, `Autofac`
+`Entity Framework 6`, `Identity 2.2.1`, `Autofac`, `Bootstrap 5.0`
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 ### Built With
 
@@ -55,10 +46,9 @@ Final project for second year at IUT2 Grenoble.  `IUT2`, `Grenoble`, `C#`, `.net
 * [.net framework 4.5.2](https://www.microsoft.com/en-us/download/details.aspx?id=42642)
 * [Entity Framework 6](https://docs.microsoft.com/en-us/ef/ef6/)
 * [Autofac](https://autofac.org/)
+* [Bootstrap 5.0](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -82,83 +72,46 @@ To get a local copy up and running follow these simple example steps.
         connectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\Documents\Test.mdf;Integrated Security=True;Connect Timeout=30" providerName="System.Data.SqlClient" />
     </connectionStrings>
     ```
+5. In case you want to start from an empty database, you should delete related tables.
+6. Deleting Restaurants table : 
+    ```sh
+    delete
+    from RestaurantModels
+    DBCC CHECKIDENT (RestaurantModels, RESEED, -1)
+    go
+    ```
+7. Deleting Dishes table :
+    ```sh
+    delete
+    from DishModels
+    DBCC CHECKIDENT (DishModels, RESEED, -1)
+    go
+    ```
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
-
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
+## Functionalities
++ Responsive navigation bar
++ Dependency Injection using Autofac
++ Showing categories and dishes for restaurants
++ Filtering dishes by category
++ Shopping cart with delete and update functionalities
++ DB integration using entity framework
++ Authentificaton and identity classes
++ Admin user accessible by (UserName : admin@admin.com, Password : Admin38000&)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Julien Morelle - julien.morelle@etu.univ-grenoble-alpes.fr
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* []()
-* []()
-* []()
+Project Link: [https://github.com/urihani/FooYesWebApp](https://github.com/urihani/FooYesWebApp)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
