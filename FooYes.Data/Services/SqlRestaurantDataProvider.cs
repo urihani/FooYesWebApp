@@ -39,22 +39,12 @@ namespace FooYes.Data.Services
 
         public DishModel GetDishById(int id)
         {
-            foreach (var restaurant in _dbContext.Restaurants)
-            {
-                var item = restaurant.Dishes.FirstOrDefault(i => i.Id == id);
-
-                if (item != null)
-                {
-                    return item;
-                }
-            }
-
-            return null;
+            return _dbContext.Dishes.FirstOrDefault(d => d.Id == id);
         }
 
         public List<DishModel> GetDishByRestaurantId(int id)
         {
-            return _dbContext.Dishes.OrderBy(d => d.Name).ToList();
+            return _dbContext.Dishes.Where(d => d.RestaurantId == id).ToList();
         }
 
         public void AddAllRestaurants()
@@ -64,69 +54,72 @@ namespace FooYes.Data.Services
             dishesForRestaurant3 = new List<DishModel>();
             dishesForRestaurant4 = new List<DishModel>();
 
-            dishesForRestaurant1.Add(new DishModel(0, 0, lorem, 2.15f, "Orangina", DishModel.MenuType.Beverage,
+            if (!_dbContext.Dishes.Any())
+            {
+            _dbContext.Dishes.Add(new DishModel(0, 0, lorem, 2.15f, "Orangina", DishModel.MenuType.Beverage,
                 "orangina.jpg"));
-            dishesForRestaurant1.Add(new DishModel(1, 0, lorem, 2.99f, "Coca", DishModel.MenuType.Beverage,
+            _dbContext.Dishes.Add(new DishModel(1, 0, lorem, 2.99f, "Coca", DishModel.MenuType.Beverage,
                 "coca-cola.png"));
-            dishesForRestaurant1.Add(new DishModel(2, 0, lorem, 3.99f, "Mars", DishModel.MenuType.IceCream,
+            _dbContext.Dishes.Add(new DishModel(2, 0, lorem, 3.99f, "Mars", DishModel.MenuType.IceCream,
                 "mars-ice-cream.jpg"));
-            dishesForRestaurant1.Add(new DishModel(3, 0, lorem, 6.99f, "Viennetta",
+            _dbContext.Dishes.Add(new DishModel(3, 0, lorem, 6.99f, "Viennetta",
                 DishModel.MenuType.IceCream, "viennetta.jpg"));
-            dishesForRestaurant1.Add(new DishModel(4, 0, lorem, 7.99f, "Lasagnes", DishModel.MenuType.Main,
+            _dbContext.Dishes.Add(new DishModel(4, 0, lorem, 7.99f, "Lasagnes", DishModel.MenuType.Main,
                 "lasagnes.jpg"));
-            dishesForRestaurant1.Add(new DishModel(5, 0, lorem, 3.99f, "Raviolis", DishModel.MenuType.Main,
+            _dbContext.Dishes.Add(new DishModel(5, 0, lorem, 3.99f, "Raviolis", DishModel.MenuType.Main,
                 "raviolis.jpg"));
-            dishesForRestaurant1.Add(new DishModel(6, 0, lorem, 4.99f, "Banana Split",
+            _dbContext.Dishes.Add(new DishModel(6, 0, lorem, 4.99f, "Banana Split",
                 DishModel.MenuType.Dessert, "banana-split.jpg"));
-            dishesForRestaurant1.Add(new DishModel(7, 0, lorem, 7.99f, "Fromage blanc",
+            _dbContext.Dishes.Add(new DishModel(7, 0, lorem, 7.99f, "Fromage blanc",
                 DishModel.MenuType.Dessert, "fromage-blanc.jpg"));
-            dishesForRestaurant1.Add(new DishModel(8, 0, lorem, 5.99f, "Crevettes", DishModel.MenuType.SeaFood,
+            _dbContext.Dishes.Add(new DishModel(8, 0, lorem, 5.99f, "Crevettes", DishModel.MenuType.SeaFood,
                 "crevettes.jpg"));
-            dishesForRestaurant1.Add(new DishModel(9, 0, lorem, 8.99f, "Langoustes",
+            _dbContext.Dishes.Add(new DishModel(9, 0, lorem, 8.99f, "Langoustes",
                 DishModel.MenuType.SeaFood, "langoustes.jpg"));
-            dishesForRestaurant1.Add(new DishModel(10, 0, lorem, 8.99f, "Salade niçoise",
+            _dbContext.Dishes.Add(new DishModel(10, 0, lorem, 8.99f, "Salade niçoise",
                 DishModel.MenuType.Starter, "salade-nice.jpg"));
-            dishesForRestaurant1.Add(new DishModel(11, 0, lorem, 8.99f, "Cake aux olives",
+            _dbContext.Dishes.Add(new DishModel(11, 0, lorem, 8.99f, "Cake aux olives",
                 DishModel.MenuType.Starter, "cake-olives.jpg"));
 
-            dishesForRestaurant2.Add(new DishModel(0, 1, lorem, 2.15f, "Orangina", DishModel.MenuType.Beverage,
+            _dbContext.Dishes.Add(new DishModel(0, 1, lorem, 2.15f, "Orangina", DishModel.MenuType.Beverage,
                 "orangina.jpg"));
-            dishesForRestaurant2.Add(new DishModel(2, 1, lorem, 3.99f, "Mars", DishModel.MenuType.IceCream,
+            _dbContext.Dishes.Add(new DishModel(2, 1, lorem, 3.99f, "Mars", DishModel.MenuType.IceCream,
                 "mars-ice-cream.jpg"));
-            dishesForRestaurant2.Add(new DishModel(4, 1, lorem, 7.99f, "Lasagnes", DishModel.MenuType.Main,
+            _dbContext.Dishes.Add(new DishModel(4, 1, lorem, 7.99f, "Lasagnes", DishModel.MenuType.Main,
                 "lasagnes.jpg"));
-            dishesForRestaurant2.Add(new DishModel(6, 1, lorem, 4.99f, "Banana Split",
+            _dbContext.Dishes.Add(new DishModel(6, 1, lorem, 4.99f, "Banana Split",
                 DishModel.MenuType.Dessert, "banana-split.jpg"));
-            dishesForRestaurant2.Add(new DishModel(8, 1, lorem, 5.99f, "Crevettes", DishModel.MenuType.SeaFood,
+            _dbContext.Dishes.Add(new DishModel(8, 1, lorem, 5.99f, "Crevettes", DishModel.MenuType.SeaFood,
                 "crevettes.jpg"));
-            dishesForRestaurant2.Add(new DishModel(10, 1, lorem, 8.99f, "Salade niçoise",
+            _dbContext.Dishes.Add(new DishModel(10, 1, lorem, 8.99f, "Salade niçoise",
                 DishModel.MenuType.Starter, "salade-nice.jpg"));
 
-            dishesForRestaurant3.Add(new DishModel(0, 2, lorem, 2.15f, "Orangina", DishModel.MenuType.Beverage,
+            _dbContext.Dishes.Add(new DishModel(0, 2, lorem, 2.15f, "Orangina", DishModel.MenuType.Beverage,
                 "orangina.jpg"));
-            dishesForRestaurant3.Add(new DishModel(2, 2, lorem, 3.99f, "Mars", DishModel.MenuType.IceCream,
+            _dbContext.Dishes.Add(new DishModel(2, 2, lorem, 3.99f, "Mars", DishModel.MenuType.IceCream,
                 "mars-ice-cream.jpg"));
-            dishesForRestaurant3.Add(new DishModel(4, 2, lorem, 7.99f, "Lasagnes", DishModel.MenuType.Main,
+            _dbContext.Dishes.Add(new DishModel(4, 2, lorem, 7.99f, "Lasagnes", DishModel.MenuType.Main,
                 "lasagnes.jpg"));
-            dishesForRestaurant3.Add(new DishModel(6, 2, lorem, 4.99f, "Banana Split",
+            _dbContext.Dishes.Add(new DishModel(6, 2, lorem, 4.99f, "Banana Split",
                 DishModel.MenuType.Dessert, "banana-split.jpg"));
-            dishesForRestaurant3.Add(new DishModel(8, 2, lorem, 5.99f, "Crevettes", DishModel.MenuType.SeaFood,
+            _dbContext.Dishes.Add(new DishModel(8, 2, lorem, 5.99f, "Crevettes", DishModel.MenuType.SeaFood,
                 "crevettes.jpg"));
-            dishesForRestaurant3.Add(new DishModel(10, 2, lorem, 8.99f, "Salade niçoise",
+            _dbContext.Dishes.Add(new DishModel(10, 2, lorem, 8.99f, "Salade niçoise",
                 DishModel.MenuType.Starter, "salade-nice.jpg"));
 
-            dishesForRestaurant4.Add(new DishModel(0, 3, lorem, 2.15f, "Orangina", DishModel.MenuType.Beverage,
+            _dbContext.Dishes.Add(new DishModel(0, 3, lorem, 2.15f, "Orangina", DishModel.MenuType.Beverage,
                 "orangina.jpg"));
-            dishesForRestaurant4.Add(new DishModel(2, 3, lorem, 3.99f, "Mars", DishModel.MenuType.IceCream,
+            _dbContext.Dishes.Add(new DishModel(2, 3, lorem, 3.99f, "Mars", DishModel.MenuType.IceCream,
                 "mars-ice-cream.jpg"));
-            dishesForRestaurant4.Add(new DishModel(4, 3, lorem, 7.99f, "Lasagnes", DishModel.MenuType.Main,
+            _dbContext.Dishes.Add(new DishModel(4, 3, lorem, 7.99f, "Lasagnes", DishModel.MenuType.Main,
                 "lasagnes.jpg"));
-            dishesForRestaurant4.Add(new DishModel(6, 3, lorem, 4.99f, "Banana Split",
+            _dbContext.Dishes.Add(new DishModel(6, 3, lorem, 4.99f, "Banana Split",
                 DishModel.MenuType.Dessert, "banana-split.jpg"));
-            dishesForRestaurant4.Add(new DishModel(8, 3, lorem, 5.99f, "Crevettes", DishModel.MenuType.SeaFood,
+            _dbContext.Dishes.Add(new DishModel(8, 3, lorem, 5.99f, "Crevettes", DishModel.MenuType.SeaFood,
                 "crevettes.jpg"));
-            dishesForRestaurant4.Add(new DishModel(10, 3, lorem, 8.99f, "Salade niçoise",
+            _dbContext.Dishes.Add(new DishModel(10, 3, lorem, 8.99f, "Salade niçoise",
                 DishModel.MenuType.Starter, "salade-nice.jpg"));
+            }
 
             _dbContext.Restaurants.Add(new RestaurantModel(
                 0,
