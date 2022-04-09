@@ -73,7 +73,7 @@ To get a local copy up and running follow these simple example steps.
     </connectionStrings>
     ```
 5. In case you want to start from an empty database, you should delete related tables.
-6. Deleting Restaurants table : 
+6. Deleting Restaurants table (in jetbrains rider => go to database panel => right click on a table => database tools => truncate) : 
     ```sh
     delete
     from RestaurantModels
@@ -83,10 +83,11 @@ To get a local copy up and running follow these simple example steps.
 7. Deleting Dishes table :
     ```sh
     delete
-    from DishModels
-    DBCC CHECKIDENT (DishModels, RESEED, -1)
-    go
+   from DishModels
+   DBCC CHECKIDENT (DishModels, RESEED, -1)
+   go
     ```
+   It is important to reset primary keys to 0 when deleting tables
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 

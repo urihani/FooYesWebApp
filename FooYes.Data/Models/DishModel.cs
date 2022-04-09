@@ -10,6 +10,25 @@ namespace FooYes.Data.Models
 {
     public class DishModel
     {
+        private sealed class IdEqualityComparer : IEqualityComparer<DishModel>
+        {
+            public bool Equals(DishModel x, DishModel y)
+            {
+                if (ReferenceEquals(x, y)) return true;
+                if (ReferenceEquals(x, null)) return false;
+                if (ReferenceEquals(y, null)) return false;
+                if (x.GetType() != y.GetType()) return false;
+                return x.Id == y.Id;
+            }
+
+            public int GetHashCode(DishModel obj)
+            {
+                return obj.Id;
+            }
+        }
+
+        public static IEqualityComparer<DishModel> IdComparer { get; } = new IdEqualityComparer();
+
         public int Id { get; set; }
         [ForeignKey("Restaurant")]
         public virtual int RestaurantId { get; set; }

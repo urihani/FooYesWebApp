@@ -19,8 +19,8 @@ namespace FooYes.Data.Models
         public CartModel(int id)
         {
             Id = id;
-            OrderLines = new Dictionary<DishModel, int>();
-            TotalByDish = new Dictionary<DishModel, float>();
+            OrderLines = new Dictionary<DishModel, int>(DishModel.IdComparer);
+            TotalByDish = new Dictionary<DishModel, float>(DishModel.IdComparer);
         }
 
         public void SetTotal()
